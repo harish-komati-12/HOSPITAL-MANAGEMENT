@@ -1,0 +1,181 @@
+/*patient*/
+create table patient(pid number primary key,pname varchar(20),age number,dob date,height real,area varchar(30),city varchar(40),pin number,disease varchar(30),gender varchar(2),weight real,phno number unique);
+insert into patient values(1,'vinod',20,'19-sep-2000',6.0,'autonagar','vizag',500004,'asthma','m','60',9084759551);
+insert into patient values(2,'harish',18,'22-jan-2002',5.2,'somapet','mumbai',900090,'fever','m','45',9745678915);
+insert into patient values(3,'sandeep',35,'12-feb-1985',5.4,'durganagar','guntur',459066,' atherosclerotic heart disease','m','70',7087756651);
+insert into patient values(4,'kalyan',29,'19-dec-1991',7.0,'masspet','guntur',467584,'hepatitis B','m','50',7098084192);
+insert into patient values(5,'maneesh',16,'28-march-2004',4.8,'punjapet','hyd',500009,'iliotibial band syndrome','m','35',9686734251);
+insert into patient values(6,'ravi',69,'7-june-1951',6.0,'kangar','hyd',500789,'hypertension','m','63',7683567910);
+insert into patient values(7,'reema',90,'31-july-1930',5.0,'galinagar','pune',606034,'fever','f','79',9745976453);
+insert into patient values(8,'chandana',26,'7-june-1994',5.3,'rushikonda','vizag',500034,'anemia','f','40',7685555510);
+insert into patient values(9,'tej',37,'31-july-1983',5.0,'galinagar','pune',606034,'lung cancer','m','89',7688888443);
+select * from patient;
+--------------------------------------------------------------------------------------------------------------------------------
+/*employee*/
+create table employee(empid varchar(5) primary key,name varchar(20),phone integer,salary integer,age integer,city varchar(20),pin integer,area varchar(20),gender varchar(7),designation varchar(10),timings varchar(20));
+insert into employee values('d1','subbarao',9391666123,70000,35,'hyderabad',534196,'jublie hills','m','doctor','10am-2pm');
+insert into employee values('d2','achyuth',8391699123,75000,45,'hyderabad',534196,'old city','m','doctor','9am-1pm');
+insert into employee values('d3','dharmaraju',7391655123,80000,55,'hyderabad',534196,'miapur','m','doctor','10am-2pm');
+insert into employee values('d4','krishna',9591644123,64000,46,'hyderabad',534196,'uppal','m','doctor','9:30am-1pm');
+insert into employee values('d5','pavan',9481633123,73000,51,'hyderabad',534196,'panja gutta','m','doctor','10am-4pm');
+insert into employee values('d6','balaji',9451611123,60000,39,'hyderabad',534196,'sardarpatel street','m','doctor','10am-6pm');
+insert into employee values('d7','santhosh',9395766123,77000,38,'hyderabad',534196,'dhoolpet','m','doctor','9am-5pm');
+insert into employee values('n1','madhuri',9391633123,15000,30,'hyderabad',534196,'ameerpet','f','nurse','9am-6pm');
+insert into employee values('n2','divya',9851666123,12000,32,'hyderabad',534196,'uppal','f','nurse','6pm-12am');
+insert into employee values('n3','rishitha',9961642123,10000,30,'hyderabad',534196,'miapur','f','nurse','12am-10pm');
+insert into employee values('n4','pallavi',9651699123,9000,32,'hyderabad',534196,'oldcity','f','nurse','10am-10pm');
+insert into employee values('n5','sailaja',9551646123,9000,35,'hyderabad',534196,'mirzapur','f','nurse','8pm-1am');
+insert into employee values('c1','rambabu',9231698123,3000,60,'hyderabad',534196,'panja gutta','m','compounder','6pm-6am');
+insert into employee values('c2','naresh',9101668123,4000,50,'hyderabad',534196,'dhoolpet','m','compounder','9am-6pm');
+select * from employee;
+-------------------------------------------------------------------------------------------------------------------------------
+/*doctor*/
+create table doctor(empid varchar(10) primary key,specilization varchar(30),foreign key(empid) references employee );
+insert into doctor values('d1','pediatrician');
+insert into doctor values('d2','cardiologist');
+insert into doctor values('d3','gastroenterologist');
+insert into doctor values('d4','physician');
+insert into doctor values('d5','hematologist');
+insert into doctor values('d6','pulmonologist');
+insert into doctor values('d7','physiotherapists');
+select * from doctor;
+---------------------------------------------------------------------------------------------------------------------------
+/*consults*/
+create table consults(pid number,empid varchar(10),primary key(pid,empid),dateconsulted date,foreign key(pid) references patient, foreign key(empid) references employee);
+insert into consults values(1,'d1','12-march-2020');
+insert into consults values(2,'d4','20-feb-2020');
+insert into consults values(3,'d2','30-jan-2020');
+insert into consults values(4,'d3','6-jul-2020');
+insert into consults values(5,'d7','9-oct-2020');
+insert into consults values(6,'d2','8-july-2020');
+insert into consults values(7,'d4','14-dec-2020');
+insert into consults values(8,'d5','4-dec-2020');
+insert into consults values(9,'d6','6-dec-2020');
+select * from consults;
+--------------------------------------------------------------------------------------------------------------------------
+/*pharmacy*/
+create table pharmacy(mediid varchar(5) primary key,mediname varchar(30) not null,availability number,price number,expiredate varchar(30));
+insert into pharmacy values('md1','paracetamol',30,20,'24 months');
+insert into pharmacy values('md2','alectinib',25,2000,'2 months');
+insert into pharmacy values('md3','asthalin',25,450,'5 months');
+insert into pharmacy values('md4','ezetimibe',15,600,'9 months');
+insert into pharmacy values('md5',' tenofovir',40,300,'10 months');
+insert into pharmacy values('md6',' fosinopril',10,800,'19 months');
+insert into pharmacy values('md7',' moexipril ',15,730,'21 months');
+insert into pharmacy values('md8',' tylenol ',55,250,'18 months');
+insert into pharmacy values('md9',' ibuprofen ',10,700,'10 months');
+insert into pharmacy values('md10',' zincovit ',30,439,'8 months');
+--------------------------------------------------------------------------------------------------------------------
+/*goes*/
+create table goes(pid number, mediid varchar(5),primary key(pid,mediid),foreign key(pid) references patient,foreign key(mediid) references pharmacy);
+insert into goes values(1,'md3');
+insert into goes values(2,'md1');
+insert into goes values(3,'md4');
+insert into goes values(4,'md5');
+insert into goes values(4,'md1');
+insert into goes values(5,'md9');
+insert into goes values(6,'md6');
+insert into goes values(6,'md7');
+insert into goes values(6,'md1');
+insert into goes values(7,'md1');
+insert into goes values(8,'md10');
+insert into goes values(9,'md2');
+select * from goes;
+------------------------------------------------------------------------------------------------------------------------
+/*nurse*/
+create table nurse(empid varchar(5) primary key,marital_status varchar(15),foreign key(empid) references employee);
+insert into nurse values('n1','married');
+insert into nurse values('n2','not married');
+insert into nurse values('n3','not married');
+insert into nurse values('n4','married');
+insert into nurse values('n5','not married');
+-------------------------------------------------------------------------------------------------------
+/*room*/
+create table room(roomid varchar(3)  primary key,roomtype varchar(20),vacancylimit number);
+insert into room values('r1','ICU',5);
+insert into room values('r2','ICU',8);
+insert into room values('r3','ICU',4);
+insert into room values('r4','GEN',10);
+insert into room values('r5','GEN',15);
+insert into room values('r6','GEN',5);
+insert into room values('r7','X-RAY',10);
+insert into room values('r8','Maternity',10);
+insert into room values('r9','Maternity',10);
+insert into room values('r10','Pediatrics',10);
+----------------------------------------------------------------------------------------------------
+/*assigned*/
+create table assigned(pid number ,roomid varchar(3),primary key(pid,roomid),dateadmitted date,datedischarged date,foreign key(pid) references patient, foreign key(roomid) references room);
+insert into assigned values(3,'r1','12-feb-20','1-mar-20');
+insert into assigned values(4,'r4','7-jul-20','21-jul-20');
+insert into assigned values(5,'r7','10-oct-20','10-oct-20');
+insert into assigned values(6,'r8','9-jul-20','21-aug-20');
+insert into assigned values(8,'r4','5-dec-20','21-dec-20');
+insert into assigned values(9,'r3','7-dec-20','31-dec-20');
+--------------------------------------------------------------------------------------------
+/*bill*/
+create table bill(billno varchar(20) primary key,roomcharges number,doccharges number);
+insert into bill values('b1',0,300);
+insert into bill values('b2',0,300);
+insert into bill values('b3',1000,500);
+insert into bill values('b4',700,300);
+insert into bill values('b5',400,500);
+insert into bill values('b6',600,300);
+insert into bill values('b7',0,300);
+insert into bill values('b8',700,600);
+insert into bill values('b9',1000,500);
+-----------------------------------------------------------------------------------------------
+/*issued*/
+create table issued(billno varchar(20),pid number,primary key(billno,pid),foreign key(billno) references bill,foreign key(pid) references patient);
+insert into issued values('b1',1);
+insert into issued values('b2',2);
+insert into issued values('b3',3);
+insert into issued values('b4',4);
+insert into issued values('b5',5);
+insert into issued values('b6',6);
+insert into issued values('b7',7);
+insert into issued values('b8',8);
+insert into issued values('b9',9);
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+/*maintains*/
+create table maintains(empid varchar(5),roomid varchar(3),primary key(empid,roomid),foreign key(empid)references nurse,foreign key(roomid)references room);
+insert into maintains values('n1','r1');
+insert into maintains values('n1','r2');
+insert into maintains values('n2','r3');
+insert into maintains values('n2','r4');
+insert into maintains values('n3','r5');
+insert into maintains values('n3','r6');
+insert into maintains values('n4','r7');
+insert into maintains values('n4','r8');
+insert into maintains values('n5','r9');
+insert into maintains values('n5','r10');
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/*quaries*/
+select pname from patient where height=6.0;
+select pid,gender from patient where city='vizag';
+select max(height) from patient;
+select phno from patient where pname like 'r%';
+select pid,pname,phno from patient where height=5.0 and (gender='m' or gender='f');
+ select pname from patient where dob like '12%' and area like '%a%';
+select empid from doctor where specilization='cardiologist';
+select e.name from employee e ,doctor d where e.empid=d.empid;
+select e.name,e.age,e.phone from employee e ,doctor d where e.empid=d.empid and d.specilization like 'cardiologist';
+select e.empid,e.name ,e.phone ,e.salary ,e.age ,e.city ,e.pin ,e.area,e.gender ,e.designation ,e.timings  from employee e,doctor d where e.empid=d.empid and e.name='balaji';
+select d.specilization from employee e ,doctor d where e.empid=d.empid and e.age<60;
+select p.pname,e.name as doctor from consults c , employee e,patient p where p.pid=c.pid and e.empid=c.empid;
+select p.pname,ph.mediname from patient p,pharmacy ph,goes g where p.pid=g.pid and g.mediid=ph.mediid and p.disease='fever';
+select p.pname,c.dateconsulted from patient p,consults c,doctor d where p.pid=c.pid and c.empid=d.empid and d.specilization like 'gastroenterologist';
+select p.pid,d.empid,d.specilization from patient p,consults c,doctor d where (p.pid=c.pid and d.empid=c.empid) and c.dateconsulted='04-dec-2020';
+ select max(e.salary) from employee e,consults c where e.empid=c.empid;
+select mediname from pharmacy where mediid='md3';
+select mediname,price from pharmacy where price=(select max(price) from pharmacy);
+ select p.pname,b.roomcharges,b.doccharges from patient p,issued i,bill b where p.pid=i.pid and i.billno=b.billno;
+select p.pname,p.disease,r.roomtype,a.dateadmitted,a.datedischarged from patient p,room r,assigned a where p.pid=a.pid and a.roomid=r.roomid;
+select e.name,e.phone,e.age,e.city,e.area,e.timings,n.marital_status from employee e,nurse n where e.empid=n.empid ;
+select designation ,count(designation) from employee group by designation;
+select salary from employee where salary=(select min(salary) from employee);
+select gender ,count(gender) from employee group by gender having gender='f' ;
+create view details as(select p.pname,m.mediname,b.roomcharges,b.doccharges from patient p , pharmacy m,bill b,issued i,goes g where p.pid=g.pid and g.mediid=m.mediid and p.pid=i.pid and i.billno=b.billno);
+select count(roomtype) from room group by roomtype;
+select mediname,price from pharmacy order by price desc; 
+select roomid from  assigned group by roomid having count(roomid)>1;
+select city from patient where age>20 union select city from patient where age<55;
